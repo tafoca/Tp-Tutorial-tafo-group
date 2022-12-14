@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Repository;
@@ -19,38 +20,39 @@ public class ProductDaoImpl  implements EntityRepository<Product>{
 
 	@Override
 	public Product save(Product p) {
-		// TODO Auto-generated method stub
-		return null;
+		em.persist(p);
+		return p;
 	}
 
 	@Override
 	public List<Product> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+		Query req = em.createQuery("select p from Product p");
+		return req.getResultList();
 	}
 
 	@Override
 	public List<Product> findByDesignation(String desig) {
-		// TODO Auto-generated method stub
-		return null;
+		Query req = em.createQuery("select p from Product p where p.designation like :x");
+		em.setProperty("x", desig);
+		return req.getResultList();
 	}
 
 	@Override
 	public Product findOne(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		Product p = em.find(Product.class, id);
+		return p;
 	}
 
 	@Override
 	public Product update(Product p) {
-		// TODO Auto-generated method stub
-		return null;
+		em.merge(p);
+		return p;
 	}
 
 	@Override
 	public void delete(Long id) {
-		// TODO Auto-generated method stub
-		
+		Product p = em.find(Product.class, id);
+		em.remove(p);
 	}
 
 }
