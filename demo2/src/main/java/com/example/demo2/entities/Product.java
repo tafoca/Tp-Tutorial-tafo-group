@@ -4,6 +4,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Product {
@@ -14,6 +16,10 @@ public class Product {
 	String designation;
 	double price;
 	int quantity;
+	@ManyToOne
+	@JoinColumn(name = "ID_CAT")
+	Category catagory;
+	
 	public Product() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -23,6 +29,21 @@ public class Product {
 		this.designation = designation;
 		this.price = price;
 		this.quantity = quantity;
+	}
+	
+	
+	public Product(String designation, double price, int quantity, Category catagory) {
+		super();
+		this.designation = designation;
+		this.price = price;
+		this.quantity = quantity;
+		this.catagory = catagory;
+	}
+	public Category getCatagory() {
+		return catagory;
+	}
+	public void setCatagory(Category catagory) {
+		this.catagory = catagory;
 	}
 	public Long getId() {
 		return id;
